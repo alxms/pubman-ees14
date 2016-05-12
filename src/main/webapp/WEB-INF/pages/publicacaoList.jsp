@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Pubman - Catálogo de Publicações!</title>
+    <title>Pubman - Catálogo de Publicações</title>
     <!-- Bootstrap CSS -->
     <%-- <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"> --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -16,13 +16,26 @@
     </style>
 </head>
 <body class=".container-fluid">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">PUBMAN - Catálogo de Publicações</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div class="container myrow-container">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <div align="left"><b>Catálogo de Publicações</b> </div>
-            </h3>
-        </div>
         <div class="panel-body">
             <c:if test="${empty publicacaoList}">
                 Não há publicações cadastradas.
@@ -56,7 +69,6 @@
                 </table>
             </c:if>
         </div>
-    </div>
 </div>    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
