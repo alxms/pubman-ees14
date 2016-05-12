@@ -26,7 +26,7 @@ public class PublicacaoController {
 	
     @RequestMapping(value = {"getAllPublicacoes", "/"})
     public ModelAndView getAllPublicacoes() {
-    	logger.info("Buscando todas as Publicações.");
+    	logger.info("Buscando todas as Publicacoes.");
         List<Publicacao> publicacaoList = publicacaoService.getAllPublicacoes();
         return new ModelAndView("publicacaoList", "publicacaoList", publicacaoList);
     }
