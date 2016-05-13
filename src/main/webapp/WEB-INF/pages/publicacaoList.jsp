@@ -16,7 +16,7 @@
 </head>
 <body class=".container-fluid">
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -57,17 +57,16 @@
   </div>
 </nav>
 
-<div class="container myrow-container">
-    <div class="panel panel-default">
+<div class="row">
 
-        <div class="table-responsive">
+        <div class="table-responsive col-md-12">
             <c:if test="${empty publicacaoList}">
                 Não há publicações cadastradas.
             </c:if>
             <c:if test="${not empty publicacaoList}">   
             
-                <table class="table table-hover">
-                    <thead style="background-color: #bce8f1;">
+                <table class="table table-hover table-striped">
+                    <!--<thead style="background-color: #bce8f1;">-->
                     <tr>
                         <th>Título</th>
                         <th>Autor</th>
@@ -93,7 +92,6 @@
                 </table>
             </c:if>
         </div>
-    </div>
 </div>    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
