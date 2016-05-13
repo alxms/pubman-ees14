@@ -44,7 +44,7 @@
 							 <input type="password" class="form-control" id="senha" placeholder="senha" required>
 						</div>
 						<div class="form-group">
-							 <button type="submit" class="btn btn-primary btn-block">Login</button>
+							 <button type="submit" class="btn btn-inverse btn-block">Login</button>
 						</div>
 					 </form>
 					</div>
