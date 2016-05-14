@@ -10,4 +10,5 @@ public interface UsuarioDAO {
     public void deleteUsuario(int id);
     public List<Usuario> getAllUsuarios();
     public Usuario getUsuarioById(int id);
+    public Usuario isValidUsuario(String nome, String senha);
 }

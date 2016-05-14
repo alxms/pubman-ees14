@@ -32,7 +32,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
     public void deleteUsuario(int id) {
     	Usuario usuario = new Usuario();
-        usuario.setIdUsuario(id);
+        usuario.setId(id);
         hibernateUtil.delete(usuario);
     }
 
@@ -45,4 +45,22 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     public Usuario getUsuarioById(int id) {
         return hibernateUtil.fetchById(id, Usuario.class);
     }
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Usuario isValidUsuario(String nome, String senha)
+	{
+		String query = "Select u.id, u.nome, u.sobrenome, u.login, u.senha, u.email"
+					  + " from usuario u where u.login = '" + nome + "' and u.senha = '" + senha + "'";
+		List<Object[]> usuariosObjects = hibernateUtil.fetchAll(query);
+		 
+		if(usuariosObjects.size() == 1) 
+		{
+			Usuario usuarioBanco = this.getUsuarioById((int)usuariosObjects.get(0)[0]);
+			return usuarioBanco;
+		}
+		 
+		return null;
+	}
+	
 }

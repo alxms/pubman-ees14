@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,13 +8,11 @@
     <title>Pubman - Catálogo de Publicações</title>
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/resources/css/login-dp.css" />" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <style type="text/css">
-        .myrow-container {
-            margin: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body class=".container-fluid">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -28,42 +27,68 @@
 	    </div>
 	    <div class="collapse navbar-collapse" id="myNavbar">
 	      <ul class="nav navbar-nav navbar-right">
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-				<ul id="login-dp" class="dropdown-menu">
-					<li>
-					 <div class="row">
-						<div class="col-md-12">
-						 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-							<div class="form-group">
-								 <label class="sr-only" for="exampleInputEmail2">usuário</label>
-								 <input type="text" class="form-control" id="usuario" placeholder="usuário" required>
+			
+			<c:if test="${not empty usuarioLogadoId}">
+				<li><p class="navbar-text"><c:out value="${usuarioLogadoNome}"/></p></li>
+				<li><a href="executeLogout">Logout</a></li>
+			</c:if>
+
+	        <c:if test="${empty usuarioLogadoId}">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+					<ul id="login-dp" class="dropdown-menu">
+						<li>
+						 <div class="row">
+							<div class="col-md-12">
+							 
+							 <form:form cssClass="form" method="post" action="executeLogin" modelAttribute="usuarioBean" accept-charset="UTF-8" id="login-nav">
+								<div class="form-group">
+									 <label class="sr-only" for="exampleInputEmail2">
+									 	usuário <form:errors path="login"/>
+									 </label>
+									 <form:input type="text" cssClass="form-control" id="login" path="login" placeholder="login" required="true" />
+								</div>
+								<div class="form-group">
+									 <label class="sr-only" for="exampleInputPassword2">
+									 	senha <form:errors path="senha"/>
+									 </label>
+									 <form:input type="password" cssClass="form-control" id="senha" path="senha" placeholder="senha" required="true" />
+								</div>
+								<div class="form-group">
+									 <button id="executeLogin" type="submit" class="btn btn-primary btn-block">Login</button>
+								</div>
+							 </form:form>
+							
 							</div>
-							<div class="form-group">
-								 <label class="sr-only" for="exampleInputPassword2">senha</label>
-								 <input type="password" class="form-control" id="senha" placeholder="senha" required>
-							</div>
-							<div class="form-group">
-								 <button type="submit" class="btn btn-primary btn-block">Login</button>
-							</div>
-						 </form>
-						</div>
-					 </div>
-					</li>
-				</ul>
-	        </li>
+						 </div>
+						</li>
+					</ul>
+		        </li>
+	      	</c:if>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
 
 	<div id="top" class="row">
-        <h2>Catálogo de Publicações</h2>
+        <c:if test="${not empty mensagemErro}">
+        	<br>
+	        <div class="alert alert-warning">
+	        	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Atenção!</strong> <c:out value="${mensagemErro}"/>
+			</div>
+		</c:if>
+		
+		<c:if test="${empty mensagemErro}">
+        	<h2>Catálogo de Publicações</h2>
+        </c:if>
+        
 	</div> <!-- /#top -->
 	
 	<div id="list" class="row">
+	<c:if test="${empty mensagemErro}">
 	    <div class="table-responsive col-md-12">
-	        
+        
 	        <c:if test="${empty publicacaoList}">
 	            Não há publicações cadastradas.
 	        </c:if>
@@ -78,7 +103,9 @@
 	                    <th>Alcance</th>
 	                    <th>Ano</th>
 	                    <th>Status</th>
-	                    <th class="actions">Ações</th>
+	                    <c:if test="${not empty usuarioLogadoId}">
+	                    	<th class="actions">Ações</th>
+	                    </c:if>
 	                </tr>
 	                <!-- </thead>  -->
 	                <tbody>
@@ -90,16 +117,19 @@
 	                    	<td><c:out value="${pub.internacional}"/></td> 
 	                    	<td><c:out value="${pub.ano}"/></td>
 	                    	<td><c:out value="${pub.status}"/></td>
-	                        <td class="actions">
-		                        <a class="btn btn-warning btn-xs" href="edit.html">Editar</a>
-		                        <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
-	                   		</td>
+	                    	<c:if test="${not empty usuarioLogadoId}">
+		                        <td class="actions">
+			                        <a class="btn btn-warning btn-xs" href="edit.html">Editar</a>
+			                        <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+		                   		</td>
+		                   	</c:if>
 	                    </tr>
 	                </c:forEach>
 	                </tbody>
 	            </table>
 	        </c:if>
 	    </div>
+	</c:if>
 	</div> <!-- /#list -->
 	 
 	 <div id="bottom" class="row">
@@ -123,12 +153,7 @@
 	    </div>
 	</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    
-    <%-- <script src="<c:url value="/resources/js/jquery-2.1.3.js"/>"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-     --%>
+
 
 </body>
 </html>

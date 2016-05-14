@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Usuario implements java.io.Serializable {
 
 	private static final long serialVersionUID = 6326855784634020898L;
-	private int idUsuario;
+	private int id;
 	private String nome;
 	private String sobrenome;
 	private String login;
@@ -29,13 +29,13 @@ public class Usuario implements java.io.Serializable {
 	public Usuario() {
 	}
 
-	public Usuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public Usuario(int id) {
+		this.id = id;
 	}
 
-	public Usuario(int idUsuario, String nome, String sobrenome, String login, String senha, String email,
+	public Usuario(int id, String nome, String sobrenome, String login, String senha, String email,
 			Set<Publicacao> publicacoes) {
-		this.idUsuario = idUsuario;
+		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.login = login;
@@ -47,12 +47,12 @@ public class Usuario implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", unique = true, nullable = false)
-	public int getIdUsuario() {
-		return this.idUsuario;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Column(name = "nome")

@@ -44,4 +44,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario getUsuarioById(int id) {
 		return usuarioDAO.getUsuarioById(id);
 	}
+
+	@Override
+	public Usuario isValidUsuario(String nome, String senha) {
+		return usuarioDAO.isValidUsuario(nome, senha);
+	}
 }
