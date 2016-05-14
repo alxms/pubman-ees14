@@ -1,7 +1,5 @@
 package com.ees14.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,7 +48,7 @@ public class LoginController {
 			else
 			{
 				model = new ModelAndView("publicacaoList");
-				String mensagemErro = "As credenciais informadas estão incorretas.";
+				String mensagemErro = "As credenciais informadas estao incorretas.";
 				
 				model.addObject("mensagemErro", mensagemErro);
 			}
