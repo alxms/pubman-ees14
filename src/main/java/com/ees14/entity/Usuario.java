@@ -100,20 +100,5 @@ public class Usuario implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "usuario_publicacao", 
-			   joinColumns = { @JoinColumn(name = "id_usuario", 
-			   							   nullable = false, 
-			   							   updatable = false) }, 
-			   inverseJoinColumns = { @JoinColumn(name = "id_publicacao", 
-			   									  nullable = false, 
-			   									  updatable = false) })
-	public Set<Publicacao> getPublicacaos() {
-		return this.publicacoes;
-	}
-
-	public void setPublicacaos(Set<Publicacao> publicacoes) {
-		this.publicacoes = publicacoes;
-	}
 
 }

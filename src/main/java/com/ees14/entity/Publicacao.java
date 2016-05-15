@@ -2,6 +2,8 @@ package com.ees14.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,7 +26,7 @@ public class Publicacao implements java.io.Serializable {
 	private int idPublicacao;
 	private String titulo;
 	private Integer ano;
-	private Boolean internacional;
+	private boolean internacional;
 	private String autores;
 	private Tipo tipo;
 	private Status status;
@@ -81,11 +85,11 @@ public class Publicacao implements java.io.Serializable {
 	}
 
 	@Column(name = "internacional")
-	public Boolean getInternacional() {
+	public boolean getInternacional() {
 		return this.internacional;
 	}
 
-	public void setInternacional(Boolean internacional) {
+	public void setInternacional(boolean internacional) {
 		this.internacional = internacional;
 	}
 
@@ -136,7 +140,14 @@ public class Publicacao implements java.io.Serializable {
 		this.resumo = resumo;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "publicacaos")
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_publicacao", 
+			   joinColumns = { @JoinColumn(name = "id_publicacao", 
+			   							   nullable = false, 
+			   							   updatable = false) }, 
+			   inverseJoinColumns = { @JoinColumn(name = "id_usuario", 
+			   									  nullable = false, 
+			   									  updatable = false) })
 	public Set<Usuario> getUsuarios() {
 		return this.usuarios;
 	}

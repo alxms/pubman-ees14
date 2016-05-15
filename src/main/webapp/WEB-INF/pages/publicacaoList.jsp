@@ -80,12 +80,25 @@
 		</c:if>
 		
 		<c:if test="${empty mensagemErro}">
-        	<h2>Catálogo de Publicações</h2>
+			<br>
+			<div class="col-md-6">
+        		<h2>Catálogo de Publicações</h2>
+        	</div>
+        	
+        	<div class="col-md-3">
+        	</div>
+        	
+        	<div class="col-md-3">
+        		<c:if test="${not empty usuarioLogadoId}">
+					<a href="createPublicacao" class="btn btn-primary pull-right h2">Nova Publicação</a>
+				</c:if>
+    		</div>
         </c:if>
         
 	</div> <!-- /#top -->
 	
 	<div id="list" class="row">
+	<br>
 	<c:if test="${empty mensagemErro}">
 	    <div class="table-responsive col-md-12">
         
@@ -119,8 +132,8 @@
 	                    	<td><c:out value="${pub.statusStr}"/></td>
 	                    	<c:if test="${not empty usuarioLogadoId}">
 		                        <td class="actions">
-			                        <a class="btn btn-warning btn-xs" href="edit.html">Editar</a>
-			                        <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+			                        <a class="btn btn-warning btn-xs" href="editPublicacao?id=<c:out value='${pub.idPublicacao}'/>">Editar</a>
+			                        <a class="btn btn-danger btn-xs"  href="deletePublicacao?id=<c:out value='${pub.idPublicacao}'/>">Excluir</a>
 		                   		</td>
 		                   	</c:if>
 	                    </tr>
@@ -133,7 +146,17 @@
 	</div> <!-- /#list -->
 	 
 	 <div id="bottom" class="row">
+		 <div class="col-md-12">
+	         
+	        <ul class="pagination">
+	            <li class="disabled"><a>&lt; Anterior</a></li>
+	            <li class="disabled"><a>1</a></li>
+	            <li><a href="#">2</a></li>
+	            <li><a href="#">3</a></li>
+	            <li class="next"><a href="#" rel="next">Próximo &gt;</a></li>
+	        </ul><!-- /.pagination -->
 	 
+	    </div>
 	 </div> <!-- /#bottom -->    
 
 	<!-- Modal -->
@@ -142,9 +165,9 @@
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-	                <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+	                <h4 class="modal-title" id="modalLabel">Excluir Publicação</h4>
 	            </div>
-	            <div class="modal-body">Deseja realmente excluir este item? </div>
+	            <div class="modal-body">Deseja realmente excluir esta publicação? </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-primary">Sim</button>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
