@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "publicacao")
@@ -21,7 +22,7 @@ public class Publicacao implements java.io.Serializable {
 	private int idPublicacao;
 	private String titulo;
 	private Integer ano;
-	private Alcance internacional;
+	private Boolean internacional;
 	private String autores;
 	private Tipo tipo;
 	private Status status;
@@ -36,7 +37,7 @@ public class Publicacao implements java.io.Serializable {
 		this.idPublicacao = idPublicacao;
 	}
 
-	public Publicacao(int idPublicacao, String titulo, Integer ano, Alcance internacional, String autores, Tipo tipo,
+	public Publicacao(int idPublicacao, String titulo, Integer ano, Boolean internacional, String autores, Tipo tipo,
 			Status status, String link, String resumo, Set<Usuario> usuarios) {
 		this.idPublicacao = idPublicacao;
 		this.titulo = titulo;
@@ -80,12 +81,11 @@ public class Publicacao implements java.io.Serializable {
 	}
 
 	@Column(name = "internacional")
-	@Enumerated(EnumType.ORDINAL)
-	public Alcance getInternacional() {
+	public Boolean getInternacional() {
 		return this.internacional;
 	}
 
-	public void setInternacional(Alcance internacional) {
+	public void setInternacional(Boolean internacional) {
 		this.internacional = internacional;
 	}
 
@@ -153,5 +153,25 @@ public class Publicacao implements java.io.Serializable {
                 ", ano='" + getAno() + '\'' +
                 ", tipo='" + getTipo() + '\'' +
                 '}';
+	}
+	
+	//transient properties
+	@Transient
+	public String getAlcance()
+	{
+		if(this.internacional) return "Internacional";
+		return "Nacional";
+	}
+	
+	@Transient
+	public String getTipoStr()
+	{
+		return this.getTipo().getValue();
+	}
+	
+	@Transient
+	public String getStatusStr()
+	{
+		return this.getStatus().getValue();
 	}
 }

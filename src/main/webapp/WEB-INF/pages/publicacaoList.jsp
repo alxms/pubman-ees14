@@ -113,10 +113,10 @@
 	                    <tr>
 	                    	<td><c:out value="${pub.titulo}"/></td>
 	                    	<td><c:out value="${pub.autores}"/></td>
-	                    	<td><c:out value="${pub.tipo}"/></td>
-	                    	<td><c:out value="${pub.internacional}"/></td> 
+	                    	<td><c:out value="${pub.tipoStr}"/></td>
+	                    	<td><c:out value="${pub.alcance}"/></td> 
 	                    	<td><c:out value="${pub.ano}"/></td>
-	                    	<td><c:out value="${pub.status}"/></td>
+	                    	<td><c:out value="${pub.statusStr}"/></td>
 	                    	<c:if test="${not empty usuarioLogadoId}">
 		                        <td class="actions">
 			                        <a class="btn btn-warning btn-xs" href="edit.html">Editar</a>
