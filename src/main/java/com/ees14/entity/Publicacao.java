@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +21,10 @@ public class Publicacao implements java.io.Serializable {
 	private int idPublicacao;
 	private String titulo;
 	private Integer ano;
-	private Boolean internacional;
+	private Alcance internacional;
 	private String autores;
-	private Integer tipo;
-	private Integer status;
+	private Tipo tipo;
+	private Status status;
 	private String link;
 	private String resumo;
 	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
@@ -34,8 +36,8 @@ public class Publicacao implements java.io.Serializable {
 		this.idPublicacao = idPublicacao;
 	}
 
-	public Publicacao(int idPublicacao, String titulo, Integer ano, Boolean internacional, String autores, Integer tipo,
-			Integer status, String link, String resumo, Set<Usuario> usuarios) {
+	public Publicacao(int idPublicacao, String titulo, Integer ano, Alcance internacional, String autores, Tipo tipo,
+			Status status, String link, String resumo, Set<Usuario> usuarios) {
 		this.idPublicacao = idPublicacao;
 		this.titulo = titulo;
 		this.ano = ano;
@@ -78,11 +80,12 @@ public class Publicacao implements java.io.Serializable {
 	}
 
 	@Column(name = "internacional")
-	public Boolean getInternacional() {
+	@Enumerated(EnumType.ORDINAL)
+	public Alcance getInternacional() {
 		return this.internacional;
 	}
 
-	public void setInternacional(Boolean internacional) {
+	public void setInternacional(Alcance internacional) {
 		this.internacional = internacional;
 	}
 
@@ -96,20 +99,22 @@ public class Publicacao implements java.io.Serializable {
 	}
 
 	@Column(name = "tipo")
-	public Integer getTipo() {
+	@Enumerated(EnumType.ORDINAL)
+	public Tipo getTipo() {
 		return this.tipo;
 	}
 
-	public void setTipo(Integer tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 
 	@Column(name = "status")
-	public Integer getStatus() {
+	@Enumerated(EnumType.ORDINAL)
+	public Status getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
