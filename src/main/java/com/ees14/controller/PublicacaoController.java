@@ -39,26 +39,44 @@ public class PublicacaoController {
 	private UsuarioService usuarioService;
 	
     @RequestMapping("createPublicacao")
-    public ModelAndView createPublicacao(@ModelAttribute Publicacao publicacao) {
+    public ModelAndView createPublicacao(HttpServletRequest request, @ModelAttribute Publicacao publicacao) {
     	logger.info("Criando nova Publicacao. Dados: " + publicacao);
     	
-    	ModelAndView model = new ModelAndView("publicacaoForm");
-    	model.addObject("publicacaoObject", publicacao);
+    	ModelAndView model = new ModelAndView();    	
+    	
+    	HttpSession session = request.getSession();
+        if(session.getAttribute("usuarioLogadoId") == null)
+        {
+        	model = new ModelAndView("redirect:/");        	
+        }
+        else
+        {
+        	model.setViewName("publicacaoForm");
+        	model.addObject("publicacaoObject", publicacao);
+        }
     	
         return model;
     }
     
     @RequestMapping("editPublicacao")
-    public ModelAndView editPublicacao(@RequestParam int id, @ModelAttribute Publicacao publicacao) {
+    public ModelAndView editPublicacao(HttpServletRequest request, @RequestParam int id, @ModelAttribute Publicacao publicacao) {
     	logger.info("Atualizando a publicacao Id " + id);
     	publicacao = publicacaoService.getPublicacaoById(id);
     	
-    	ModelAndView model = new ModelAndView("publicacaoForm");
-    	model.addObject("publicacaoObject", publicacao);
-        
-    	model.addObject("tipoEnumList", Tipo.values());
-    	model.addObject("statusEnumList", Status.values());
+    	ModelAndView model = new ModelAndView();    	
     	
+    	HttpSession session = request.getSession();
+        if(session.getAttribute("usuarioLogadoId") == null)
+        {
+        	model = new ModelAndView("redirect:/");        	
+        }
+        else
+        {
+        	model.setViewName("publicacaoForm");
+        	model.addObject("publicacaoObject", publicacao);
+        	model.addObject("tipoEnumList", Tipo.values());
+        	model.addObject("statusEnumList", Status.values());
+        }
     	return model;
     }
     
@@ -82,14 +100,14 @@ public class PublicacaoController {
         {
         	publicacaoService.updatePublicacao(publicacao);
         }
-        return new ModelAndView("redirect:getAllPublicacoes");
+        return new ModelAndView("redirect:/");
     }
     
     @RequestMapping("deletePublicacao")
     public ModelAndView deletePublicacao(@RequestParam int id) {
     	logger.info("Deletando a Publicacao. Id : "+id);
         publicacaoService.deletePublicacao(id);
-        return new ModelAndView("redirect:getAllPublicacoes");
+        return new ModelAndView("redirect:/");
     }
 	
     @RequestMapping(value = {"getAllPublicacoes", "/"})
