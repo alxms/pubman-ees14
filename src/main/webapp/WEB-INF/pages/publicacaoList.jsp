@@ -6,11 +6,27 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Pubman - Catálogo de Publicações</title>
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
     <link href="<c:url value="/resources/css/login-dp.css" />" rel="stylesheet"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    
+    <!-- JS -->
+	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+			$('#pub-table').DataTable({
+			    language: {
+			        url: '//cdn.datatables.net/plug-ins/1.10.11/i18n/Portuguese-Brasil.json'
+			    },
+			    "order": [[ 4, 'asc' ], [ 2, 'asc' ], [ 1, 'asc' ]]
+			});
+		} );
+
+	</script>
 </head>
 
 <body class=".container-fluid">
@@ -94,21 +110,22 @@
 				</c:if>
     		</div>
         </c:if>
-        
 	</div> <!-- /#top -->
 	
 	<div id="list" class="row">
+    <hr>
 	<br>
 	<c:if test="${empty mensagemErro}">
-	    <div class="table-responsive col-md-12">
+	    <div cssClass="table-responsive col-md-12">
         
 	        <c:if test="${empty publicacaoList}">
 	            Não há publicações cadastradas.
 	        </c:if>
 
-	        <c:if test="${not empty publicacaoList}">   
-	            <table class="table table-hover" cellspacing="0" cellpadding="0">
-	                <!--<thead style="background-color: #bce8f1;">-->
+	        <c:if test="${not empty publicacaoList}">  
+
+	            <table id="pub-table" class="display">
+	                <thead>
 	                <tr>
 	                    <th>Título</th>
 	                    <th>Autor</th>
@@ -120,7 +137,7 @@
 	                    	<th class="actions">Ações</th>
 	                    </c:if>
 	                </tr>
-	                <!-- </thead>  -->
+	                </thead>
 	                <tbody>
 	                <c:forEach items="${publicacaoList}" var="pub">
 	                    <tr>
@@ -133,13 +150,14 @@
 	                    	<c:if test="${not empty usuarioLogadoId}">
 		                        <td class="actions">
 			                        <a class="btn btn-warning btn-xs" href="editPublicacao?id=<c:out value='${pub.idPublicacao}'/>">Editar</a>
-			                        <a class="btn btn-danger btn-xs"  href="deletePublicacao?id=<c:out value='${pub.idPublicacao}'/>">Excluir</a>
+			                        <a class="open-dialog btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal" data-id="<c:out value='${pub.idPublicacao}'/>">Excluir</a>
 		                   		</td>
 		                   	</c:if>
 	                    </tr>
 	                </c:forEach>
 	                </tbody>
 	            </table>
+
 	        </c:if>
 	    </div>
 	</c:if>
@@ -147,14 +165,14 @@
 	 
 	 <div id="bottom" class="row">
 		 <div class="col-md-12">
-	         
+	         <!--
 	        <ul class="pagination">
 	            <li class="disabled"><a>&lt; Anterior</a></li>
 	            <li class="disabled"><a>1</a></li>
 	            <li><a href="#">2</a></li>
 	            <li><a href="#">3</a></li>
 	            <li class="next"><a href="#" rel="next">Próximo &gt;</a></li>
-	        </ul><!-- /.pagination -->
+	        </ul> /.pagination -->
 	 
 	    </div>
 	 </div> <!-- /#bottom -->    
@@ -169,14 +187,23 @@
 	            </div>
 	            <div class="modal-body">Deseja realmente excluir esta publicação? </div>
 	            <div class="modal-footer">
-	                <button type="button" class="btn btn-primary">Sim</button>
+	                <a href="#" class="btn btn-primary" id="modal-confirm">Sim</a>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
 	            </div>
 	        </div>
 	    </div>
 	</div>
 
+<script type="text/javascript">
 
+	$(document).on("click", 
+				   ".open-dialog", 
+				   function () 
+				   {
+	 			   		var publicacaoId = $(this).data('id');
+	 					$("#modal-confirm").attr("href", "deletePublicacao?id=" + publicacaoId);
+				   });
+</script>
 
 </body>
 </html>
