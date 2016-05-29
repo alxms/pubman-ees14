@@ -91,20 +91,20 @@
 	    
 			<div class="form-group">
 		    	<form:label path="titulo" cssClass="control-label col-xs-3">
-		    		Título
+		    		Título <form:errors path="titulo"/>
 		    	</form:label> 
 			    <div class="col-xs-6">
 			        <form:hidden path="idPublicacao"/>
-			        <form:input cssClass="form-control" path="titulo"/>
+			        <form:input cssClass="form-control" path="titulo" type="text" placeholder="Digite o título da publicação" required="true"/>
 			    </div>
 			</div>
 			
 			<div class="form-group">
 			    <form:label path="autores" cssClass="control-label col-xs-3">
-			    	Autores
+			    	Autores <form:errors path="titulo"/>
 			    </form:label>
 			    <div class="col-xs-6">
-			        <form:input cssClass="form-control" path="autores"/>
+			        <form:input cssClass="form-control" path="autores" type="text" placeholder="Digite o nome dos autores" required="true"/>
 			    </div>
 			</div>
 			
@@ -156,11 +156,11 @@
 			<div class="form-group">
 			    <div class="control-label col-xs-3">
 			    	<form:label path="ano">
-			    		Ano
+			    		Ano <form:errors path="ano"/>
 			    	</form:label>
 			    </div>
 			    <div class="col-xs-3">
-					<form:input cssClass="form-control" path="ano" />
+					<form:input cssClass="form-control" path="ano" type="number" placeholder="Digite o ano da publicação" required="true"/>
 			    </div>
 			</div>			
 
@@ -183,22 +183,22 @@
 			<div class="form-group">
 			    <div class="control-label col-xs-3">
 			    	<form:label path="link">
-			    		Link
+			    		Link <form:errors path="link"/>
 			    	</form:label>
 			    </div>
 			    <div class="col-xs-6">
-					<form:input cssClass="form-control" path="link" />
+					<form:input cssClass="form-control" path="link" type="url" placeholder="Digite o link para o conteúdo da publicação."/>
 			    </div>
 			</div>
 
 			<div class="form-group">
 			    <div class="control-label col-xs-3">
 			    	<form:label path="resumo">
-			    		Resumo
+			    		Resumo <form:errors path="resumo"/>
 			    	</form:label>
 			    </div>
 			    <div class="col-xs-6">
-					<form:textarea cssClass="form-control" path="resumo" rows="5"/>
+					<form:textarea cssClass="form-control" path="resumo" rows="5" maxlength="1024" placeholder="Digite o resumo da publicação."/>
 			    </div>
 			</div>
 			
@@ -208,6 +208,7 @@
 	                </div>
 	                <div class="col-xs-6">
 			    		<input type="submit" id="savePublicacao" class="btn btn-primary" value="Ok" />
+			    		<a class="btn btn-warning" href="getAllPublicacoes">Cancelar</a>
 					</div>
 					<div class="col-xs-3">
 	                </div>
