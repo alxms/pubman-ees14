@@ -22,7 +22,7 @@
 			    language: {
 			        url: '//cdn.datatables.net/plug-ins/1.10.11/i18n/Portuguese-Brasil.json'
 			    },
-			    "order": [[ 4, 'asc' ], [ 2, 'asc' ], [ 1, 'asc' ]]
+			    "order": [[ 4, 'desc' ], [ 2, 'asc' ], [ 1, 'asc' ]]
 			});
 		} );
 
